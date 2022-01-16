@@ -31,7 +31,8 @@ Aegina::AeginaStatus HandleHijack::HijackHandle(Aegina::_PAeginaInfo AeginaInfo)
 		}
 		break;
 	}
-
+	
+	free(pShi);
 	return Aegina::AeginaStatus::HIJACK_HANDLE_SUCCESS;
 }
 
