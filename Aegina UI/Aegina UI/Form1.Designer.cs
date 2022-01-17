@@ -106,6 +106,7 @@
             this.txtTarget.Size = new System.Drawing.Size(230, 27);
             this.txtTarget.TabIndex = 7;
             this.txtTarget.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtTarget.ForeColor = System.Drawing.Color.White;
             // 
             // label2
             // 
