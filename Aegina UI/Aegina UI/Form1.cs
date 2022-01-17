@@ -34,6 +34,11 @@ namespace Aegina_UI
             MANUAL_MAP_SUCCESS
         };
 
+        private static bool isProcessRunning(string Name)
+        {
+            Process[] processes = Process.GetProcessesByName(Name);
+            return processes.Length == 0 ? false : true;
+        }
         [DllImport("Aegina.dll")]
         private static extern AeginaStatus Inject(string DllPath, string Target);
         private void btnInject_Click(object sender, EventArgs e)
@@ -41,10 +46,12 @@ namespace Aegina_UI
             AeginaStatus status = Inject(lblFilePath.Text, txtTarget.Text);
             if (status != AeginaStatus.STATUS_SUCCESSFUL_INJECTION)
             {
+                System.Media.SystemSounds.Asterisk.Play();
                 MessageBox.Show("Aegina error code: " + status);
             }
             else
             {
+                System.Media.SystemSounds.Asterisk.Play();
                 MessageBox.Show("Successful Injection!");
             }
         }
@@ -52,13 +59,25 @@ namespace Aegina_UI
         private void btnGetFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter =
-               "Dll Files (*.dll)|*.dll|All files (*.*)|*.*";
+            dialog.Filter = "Dll Files (*.dll)|*.dll|All files (*.*)|*.*";
             dialog.InitialDirectory = "C:\\";
             dialog.Title = "Select a text file";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 lblFilePath.Text= dialog.FileName;
+            }
+        }
+
+        private void txtTarget_TextChanged(object sender, EventArgs e)
+        {
+            if (isProcessRunning(txtTarget.Text))
+            {
+                txtTarget.Text = txtTarget.Text + ".exe";
+                txtTarget.BackColor = Color.Green;
+            }
+            else
+            {
+                txtTarget.BackColor = Color.Red;
             }
         }
     }
